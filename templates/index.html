@@ -1,0 +1,49 @@
+<head>
+     <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/main.css') }}">
+</head>
+
+<p>Images</p>
+
+
+<script>
+    let xhr = new XMLHttpRequest();
+
+    let imagePaths = "";
+
+    xhr.open('GET', '/getImages');
+    xhr.send();
+
+    xhr.onload = function()
+    {
+        if(xhr.status === 200)
+        {
+            //console.log(xhr.response);
+            imagePaths =JSON.parse(xhr.response);
+            console.log(imagePaths.responses[0]);
+
+            for(let i = 0; i < imagePaths.responses.length;i++)
+            {
+              populateImages(imagePaths.responses[i]);  
+            }
+            //imgPath = imagePaths.responses[0];
+            //populateImages(imgPath);
+        }
+
+        //console.log(imagePaths);
+    }
+
+
+    function populateImages(imgPath)
+    {
+        pic = document.createElement('img');
+        pic.src = imgPath;
+        
+        document.body.append(pic);
+
+        //document.body.append(document.createElement("br"));
+        //document.body.append(document.createElement("br"));
+    }
+
+
+    
+</script>
