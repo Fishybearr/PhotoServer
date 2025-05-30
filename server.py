@@ -76,9 +76,15 @@ def GetImages():
 
     cur.execute("SELECT image_path FROM images WHERE date_created BETWEEN '1900-01-01' AND '2050-01-01' ORDER BY date_created LIMIT 30 OFFSET 0") #TODO: Change these dates used for the between and change limit and offset
     response = cur.fetchall()
+
+    cur.execute("SELECT date_created FROM images WHERE date_created BETWEEN '1900-01-01' AND '2050-01-01' ORDER BY date_created LIMIT 30 OFFSET 0") #TODO: Change these dates used for the between and change limit and offset
+    responseDates = cur.fetchall()
+
+
     cur.close()
     con.close()
 
-    return jsonify({"responses":response})
+#TODO: Should upadte this so it's easier to read from the system
+    return jsonify({"responses":response}, {"responseDates":responseDates})
 
 app.run(debug=True)

@@ -10,22 +10,22 @@ def AddPhotoToDB(photoPath):
     mTime =  os.path.getmtime(photoPath)
     mDate = datetime.datetime.fromtimestamp(mTime)
     mDate = mDate.strftime("%Y-%m-%d %H:%M:%S")
-    print(mDate)
+    #print(mDate)
 
     cTime = os.path.getctime(photoPath)
     cDate = datetime.datetime.fromtimestamp(cTime)
     cDate = cDate.strftime("%Y-%m-%d %H:%M:%S")
-    print(cDate)
+    #print(cDate)
 
     if(cTime < mTime):
-        print("createdFirst")
+        #print("createdFirst")
         date = cDate
     else:
-        print("modifedFirst")
+       # print("modifedFirst")
         date = mDate
 
     photoPath = "/" + photoPath[photoPath.find('static'):]
-    print(photoPath)
+    #print(photoPath)
 
 
     con = sqlite3.connect("images.db")
@@ -35,12 +35,18 @@ def AddPhotoToDB(photoPath):
     cur.close()
     con.close()
 
+"""
 directory = "G:/PhotoServer/static/Images"
 
 for file in os.listdir(directory):
     file = os.path.join(directory,file)
+    file = file.replace("\\","/")
     print(file)
-
-#AddPhotoToDB("G:/PhotoServer/static/Images/BrightTrees.png")
+    try:
+        AddPhotoToDB(file)
+    except:
+        print("didn't work")
+"""
+AddPhotoToDB("G:/PhotoServer/static/Images/chick2.JPG")
 #AddPhotoToDB("G:/PhotoServer/static/Images/AmericanCyp.png")
 #AddPhotoToDB("G:/PhotoServer/static/Images/RidgeLine.png")

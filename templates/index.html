@@ -10,20 +10,46 @@
 
     let imagePaths = "";
 
+    let currDate = "";
+
     xhr.open('GET', '/getImages');
     xhr.send();
 
     xhr.onload = function()
     {
+
+    //TODO: Clean up this section used for comparing dates and adding labels
         if(xhr.status === 200)
         {
             //console.log(xhr.response);
             imagePaths =JSON.parse(xhr.response);
-            console.log(imagePaths.responses[0]);
+            console.log(imagePaths);
+            console.log(imagePaths[0].responses[0]);
 
-            for(let i = 0; i < imagePaths.responses.length;i++)
+            for(let i = 0; i < imagePaths[0].responses.length;i++)
             {
-              populateImages(imagePaths.responses[i]);  
+                compareDate = imagePaths[1].responseDates[i][0].slice(0,10);
+
+                if(i === 0 || compareDate != currDate)
+                {
+                    console.log(compareDate);
+
+                    dateLabel = document.createElement("h2");
+                    dateLabel.innerText = compareDate;
+
+                    currDate = compareDate;
+
+                    //console.log("currDate: " + currDate);
+                    document.body.append(dateLabel);
+                
+                }
+                else
+                {
+                    console.log("Equal");
+                }
+
+              populateImages(imagePaths[0].responses[i]);
+            
             }
             //imgPath = imagePaths.responses[0];
             //populateImages(imgPath);
@@ -37,6 +63,7 @@
     {
         pic = document.createElement('img');
         pic.src = imgPath;
+        //TODO: Add something here to create a link on the page for each image
         
         document.body.append(pic);
 
